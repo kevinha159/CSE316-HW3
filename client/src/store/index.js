@@ -4,6 +4,7 @@ import api from '../api'
 import MoveSong_Transaction from './transactions/MoveSong_Transaction';
 import AddSong_Transaction from './transactions/AddSong_Transaction';
 import DeleteSong_Transaction from './transactions/DeleteSong_Transaction';
+import EditSong_Transaction from './transactions/EditSong_Transaction';
 export const GlobalStoreContext = createContext({});
 /*
     This is our global data store. Note that it uses the Flux design pattern,
@@ -214,11 +215,9 @@ export const useGlobalStore = () => {
         asyncDeleteSong(idx);
     }
 
-    store.editSong = function (song){
+    store.editSong = function (idx, song){
         async function asyncEditSong(song){
-            store.currentList.songs[store.markedSongIdx].title = song.title;
-            store.currentList.songs[store.markedSongIdx].artist = song.artist;
-            store.currentList.songs[store.markedSongIdx].youTubeId = song.youTubeId;
+            store.currentList.songs.splice(idx, 1, song);
             store.putPlaylist();
         }
         asyncEditSong(song);
@@ -248,6 +247,11 @@ export const useGlobalStore = () => {
         console.log(store.markedSongIdx);
         console.log(store.markedSong);
         let transaction = new DeleteSong_Transaction(store, store.markedSongIdx, store.markedSong);
+        tps.addTransaction(transaction);
+    }
+
+    store.addEditSongTransaction = function (idx, oldSong, newSong) {
+        let transaction = new EditSong_Transaction(store, idx, oldSong, newSong);
         tps.addTransaction(transaction);
     }
 
@@ -330,6 +334,14 @@ export const useGlobalStore = () => {
             store.putPlaylist();
         }
         asyncDeleteMarkedSong();        
+    }
+
+    store.editMarkedSong = function (song) {
+        async function asyncEditMarkedSong(song){
+            store.editSong(song);
+            store.putPlaylist();        
+        }
+        asyncEditMarkedSong(song);
     }
 
     store.getPlaylistSize = function() {

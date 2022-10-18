@@ -26,7 +26,6 @@ createPlaylist = (req, res) => {
     playlist
         .save()
         .then(() => {
-            console.log("1")
             return res.status(201).json({
                 success: true,
                 playlist: playlist,
@@ -122,9 +121,9 @@ putPlaylistById = async (req, res) => {
         list.songs = playlist.songs;
  
         list
-        .save()
+        .update()
         .then(() => {
-            console.log(1);
+            console.log(201);
             res.status(201).json({
                 success: true,
                 playlist: playlist,
@@ -133,7 +132,9 @@ putPlaylistById = async (req, res) => {
             return;
         })
         .catch(error => {
-            console.log(2);
+            console.log(400);
+            console.log(req.body.data.id);
+            console.log(error);
             res.status(400).json({
                 error,
                 message: 'Playlist Not Modified!',

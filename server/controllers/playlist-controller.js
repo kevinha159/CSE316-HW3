@@ -130,6 +130,7 @@ putPlaylistById = async (req, res) => {
                 message: 'Playlist Modified!',
             }) 
             return;
+            
         })
         .catch(error => {
             console.log(400);

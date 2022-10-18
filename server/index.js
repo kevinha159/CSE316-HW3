@@ -16,6 +16,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(cors())
 app.use(express.json())
 
+
 // SETUP OUR OWN ROUTERS AS MIDDLEWARE
 const playlistRouter = require('./routes/playlists-router')
 app.use('/api', playlistRouter)

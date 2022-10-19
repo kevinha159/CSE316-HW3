@@ -47,7 +47,6 @@ function SongCard(props) {
 
     const { song, index } = props;
     let cardClass = "list-card unselected-list-card";
-    console.log("in songcard");
     return (
         <div
             key={index}

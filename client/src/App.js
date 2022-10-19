@@ -10,6 +10,7 @@ import { Banner, EditSongModal, DeleteListModal, DeleteSongModal, ListSelector, 
 const App = () => {
     return (
         <Router>
+            <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Tangerine"></link>
             <Banner />
             <Switch>
                 <Route path="/" exact component={ListSelector} />

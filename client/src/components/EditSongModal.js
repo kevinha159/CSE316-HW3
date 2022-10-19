@@ -4,15 +4,35 @@ import {GlobalStoreContext} from '../store'
 function EditSongModal(){
 
     const {store} = useContext(GlobalStoreContext);
+    let title = "";
+    let artist = "";
+    let youTubeId = "";
 
+    if(store.markedSong){
+        title = store.markedSong.title;
+        artist = store.markedSong.artist;
+        youTubeId = store.markedSong.youTubeId;
+        document.getElementById("title").value = title;
+        document.getElementById("artist").value = artist;
+        document.getElementById("youTubeId").value = youTubeId;
+    }
     function confirmHandle(){
-        store.hideEditSongModal();
         let song = {
             title: document.getElementById("title").value,
             artist: document.getElementById("artist").value,
             youTubeId: document.getElementById("youTubeId").value
         }
-        store.editMarkedSong(song);
+        console.log("Song after edit");
+        console.log(song);
+        console.log(store.markedSong);
+        let copy = {
+            title: store.markedSong.title,
+            artist: store.markedSong.artist,
+            youTubeId: store.markedSong.youTubeId
+        }
+        store.addEditSongTransaction(store.markedSongIdx, copy, song);
+        store.hideEditSongModal();
+
     }
 
     function cancelHandle(){
@@ -32,17 +52,17 @@ function EditSongModal(){
                     <form>        
                         <label>
                             Title:
-                            {/* <input name="title" type="text" value={""} onChange={this.handleInputChange} />         */}
+                            <input name="title" id = "title" type="text" defaultValue={title} />        
                         </label>
                         <br></br>
                         <label>
                             Artist:
-                            {/* <input name="artist" type="text" value={""} onChange={this.handleInputChange} />         */}
+                            <input name="artist" id = "artist" type="text" defaultValue={artist}  />        
                         </label>
                         <br></br>
                         <label>
                             youTubeId:
-                            {/* <input name="youTubeId" type="text" value={""} onChange={this.handleInputChange} />         */}
+                            <input name="youTubeId" id = "youTubeId" type="text" defaultValue={youTubeId}  />        
                         </label>
                     </form>
                     </div>

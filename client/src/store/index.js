@@ -53,7 +53,8 @@ export const useGlobalStore = () => {
                     idNamePairs: payload.idNamePairs,
                     currentList: payload.playlist,
                     newListCounter: store.newListCounter,
-                    listNameActive: false
+                    listNameActive: false,
+                    modalOpen: false
                 });
             }
             // STOP EDITING THE CURRENT LIST
@@ -62,7 +63,8 @@ export const useGlobalStore = () => {
                     idNamePairs: store.idNamePairs,
                     currentList: null,
                     newListCounter: store.newListCounter,
-                    listNameActive: false
+                    listNameActive: false,
+                    modalOpen: false
                 })
             }
             // CREATE A NEW LIST
@@ -71,7 +73,8 @@ export const useGlobalStore = () => {
                     idNamePairs: store.idNamePairs,
                     currentList: payload,
                     newListCounter: store.newListCounter + 1,
-                    listNameActive: false
+                    listNameActive: false,
+                    modalOpen: false
                 })
             }
             // GET ALL THE LISTS SO WE CAN PRESENT THEM
@@ -80,7 +83,8 @@ export const useGlobalStore = () => {
                     idNamePairs: payload,
                     currentList: null,
                     newListCounter: store.newListCounter,
-                    listNameActive: false
+                    listNameActive: false,
+                    modalOpen: false
                 });
             }
             // PREPARE TO DELETE A LIST
@@ -89,7 +93,9 @@ export const useGlobalStore = () => {
                     idNamePairs: store.idNamePairs,
                     newListCounter: store.newListCounter,
                     listNameActive: false,
-                    markedList: payload
+                    currentList: null,
+                    markedList: payload,
+                    modalOpen: true
                 });
             }
 
@@ -102,7 +108,8 @@ export const useGlobalStore = () => {
                     newListCounter: store.newListCounter,
                     listNameActive: false,
                     markedSongIdx: payload.index,
-                    markedSong: payload.song
+                    markedSong: payload.song,
+                    modalOpen: true
                 });
             }
 
@@ -112,7 +119,8 @@ export const useGlobalStore = () => {
                     idNamePairs: store.idNamePairs,
                     currentList: payload,
                     newListCounter: store.newListCounter,
-                    listNameActive: false
+                    listNameActive: false,
+                    modalOpen: false
                 });
             }
             // START EDITING A LIST NAME
@@ -121,7 +129,8 @@ export const useGlobalStore = () => {
                     idNamePairs: store.idNamePairs,
                     currentList: payload,
                     newListCounter: store.newListCounter,
-                    listNameActive: true
+                    listNameActive: true,
+                    modalOpen: false
                 });
             }
             default:
@@ -353,6 +362,14 @@ export const useGlobalStore = () => {
     }
     store.redo = function () {
         tps.doTransaction();
+    }
+
+    store.hasUndo = function () {
+        return tps.hasTransactionToUndo();
+    }
+
+    store.hasRedo = function () {
+        return tps.hasTransactionToRedo();
     }
 
     // THIS FUNCTION ENABLES THE PROCESS OF EDITING A LIST NAME

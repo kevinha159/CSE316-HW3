@@ -20,6 +20,7 @@ function SongCard(props) {
         setDrag(false);
     }
     function handleDrop(event){
+        
         event.preventDefault();
         let target = event.target;
         let targetId = target.id;
